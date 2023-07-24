@@ -1,4 +1,5 @@
 import React from 'react';
+import CartItem from './CartItem';
 
 interface CartProps {
     cartItems: { id: number; title: string; price: number }[];
@@ -19,10 +20,7 @@ const Cart: React.FC<CartProps> = ({ cartItems }) => {
                 </thead>
                 <tbody>
                 {cartItems.map((item) => (
-                    <tr key={item.id}>
-                        <td>{item.title}</td>
-                        <td>${item.price}</td>
-                    </tr>
+                    <CartItem key={item.id} item={item} />
                 ))}
                 </tbody>
             </table>

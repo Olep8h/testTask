@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { fetchProducts } from './services/fakestoreApi';
 import Product from './components/Product';
 import Cart from './components/Cart';
 
@@ -8,12 +8,12 @@ const App: React.FC = () => {
     const [cartItems, setCartItems] = useState<{ id: number; title: string; price: number }[]>([]);
 
     useEffect(() => {
-        axios.get('https://fakestoreapi.com/products')
-            .then((response) => setProducts(response.data))
-            .catch((error) => console.error('Error fetching products:', error));
+        fetchProducts()
+            .then((data) => setProducts(data))
+            .catch((error) => console.error(error));
     }, []);
 
-    const addToCart = (product: { id: number; title: string; price: number }) => {
+    const handleAddToCart = (product: { id: number; title: string; price: number }) => {
         setCartItems((prevCartItems) => [...prevCartItems, product]);
     };
 
@@ -22,7 +22,7 @@ const App: React.FC = () => {
             <div>
                 <h2>Products</h2>
                 {products.map((product) => (
-                    <Product key={product.id} product={product} addToCart={addToCart} />
+                    <Product key={product.id} product={product} onAddToCart={() => handleAddToCart(product)} />
                 ))}
             </div>
             <div>

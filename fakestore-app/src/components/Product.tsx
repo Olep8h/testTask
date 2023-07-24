@@ -6,15 +6,15 @@ interface ProductProps {
         title: string;
         price: number;
     };
-    addToCart: (product: { id: number; title: string; price: number }) => void;
+    onAddToCart: () => void;
 }
 
-const Product: React.FC<ProductProps> = ({ product, addToCart }) => {
+const Product: React.FC<ProductProps> = ({ product, onAddToCart }) => {
     return (
         <div>
             <h3>{product.title}</h3>
             <p>Price: ${product.price}</p>
-            <button onClick={() => addToCart(product)}>Add to Cart</button>
+            <button onClick={onAddToCart}>Add to Cart</button>
         </div>
     );
 };
