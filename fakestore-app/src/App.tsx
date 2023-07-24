@@ -5,12 +5,14 @@ import Cart from './components/Cart';
 import { validateProductResponse } from './utils/validation';
 import { useCart } from './hooks/useCart';
 import SuccessMessage from './components/SuccessMessage';
+import { Link, Routes, Route } from 'react-router-dom';
 
 interface Product {
     id: number;
     title: string;
     price: number;
 }
+
 const App: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string>('');
@@ -34,29 +36,48 @@ const App: React.FC = () => {
 
     return (
         <div>
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Products</Link>
+                    </li>
+                    <li>
+                        <Link to="/cart">Cart</Link>
+                    </li>
+                </ul>
+            </nav>
+
             {error ? (
                 <div>Error: {error}</div>
             ) : (
                 <>
-                    <div>
-                        <h2>Products</h2>
-                        {products.map((product) => (
-                            <Product
-                                key={product.id}
-                                product={product}
-                                onAddToCart={() => {
-                                    addToCart(product);
-                                    showSuccessMessage(product.title);
-                                }}
-                            />
-                        ))}
-                    </div>
-                    <div>
-                        <Cart cartItems={cartItems} />
-                    </div>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <div>
+                                    <h2>Products</h2>
+                                    {products.map((product) => (
+                                        <Product
+                                            key={product.id}
+                                            product={product}
+                                            onAddToCart={() => {
+                                                addToCart(product);
+                                                showSuccessMessage(product.title);
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                            }
+                        />
+                        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+                    </Routes>
                 </>
             )}
-            {successMessage && <SuccessMessage message={successMessage} onClose={() => setSuccessMessage('')} />}
+
+            {successMessage && (
+                <SuccessMessage message={successMessage} onClose={() => setSuccessMessage('')} />
+            )}
         </div>
     );
 };
