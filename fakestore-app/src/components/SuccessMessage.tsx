@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-interface SuccessMessageProps {
+type SuccessMessageProps = {
     message: string;
     onClose: () => void;
-}
+    isProductAdded?: boolean;
+};
 
-const SuccessMessage: React.FC<SuccessMessageProps> = ({ message, onClose }) => {
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            onClose();
-        }, 3000);
-
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [onClose]);
-
+const SuccessMessage: React.FC<SuccessMessageProps> = ({ message, onClose, isProductAdded }) => {
     return (
-        <div>{message}</div>
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-md shadow">
+            <p>{message}</p>
+            <button className="mt-2" onClick={onClose}>
+                Close
+            </button>
+        </div>
     );
 };
 
