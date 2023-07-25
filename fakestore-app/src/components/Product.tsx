@@ -13,9 +13,9 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = ({ product, onAddToCart }) => {
     return (
         <div className="p-4 border rounded-lg shadow-md flex flex-col justify-between h-full">
-            <div>
-                <h3 className="text-lg font-semibold">{product.title}</h3>
+            <div className="flex flex-col justify-between h-full">
                 <img src={product.image} alt={product.title} className="w-full h-48 object-contain mt-2" />
+                <h3 className="text-lg font-semibold mt-2">{product.title}</h3>
                 <p className="text-gray-600">Price: ${product.price}</p>
             </div>
             <div>
