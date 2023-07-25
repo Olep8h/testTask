@@ -52,7 +52,9 @@ const App: React.FC = () => {
     // Get the current products to be displayed on the page
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-
+    const handleDeleteItem = (itemId: number) => {
+        setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    };
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -104,7 +106,7 @@ const App: React.FC = () => {
                                 </>
                             }
                         />
-                        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+                        <Route path="/cart" element={<Cart cartItems={cartItems} onDeleteItem={handleDeleteItem} />} />
                     </Routes>
                 </>
             )}
